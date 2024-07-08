@@ -10,10 +10,10 @@ import java.sql.*;
 public class BankingApp {
 
     public static void main(String[] args) {
-//       spustí funkci pro vyvrovření schématu databáze
+       //spustí funkci pro vyvrovření schématu databáze
 //       try
 //       {
-//           //CreateDbSchema.schemaCreate();
+//           CreateDbSchema.schemaCreate();
 //           
 //       }
 //       catch(Exception e)

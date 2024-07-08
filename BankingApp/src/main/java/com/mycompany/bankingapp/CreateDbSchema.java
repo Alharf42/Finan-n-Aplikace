@@ -11,7 +11,7 @@ public class CreateDbSchema {
        //System.out.println("classpath "+System.getProperty("java.class.path"));
        Class.forName("org.apache.derby.client.ClientAutoloadedDriver");
 
-
+       //create=true
         //gettin connection to the database
         String url = "jdbc:derby://localhost:1527/banking;user=banking;password=banking";
         Connection conn = DriverManager.getConnection(url);
@@ -47,11 +47,11 @@ public class CreateDbSchema {
         String query5 = "ALTER TABLE TypesOfExpenses "
                 + "ADD Type VARCHAR(10) CHECK (Type IN ('Zbytné', 'Nezbytné'))";
         
-        //stmt.execute(query);
-       //stmt.execute(query2);
-        //stmt.execute(query3);
-        //stmt.execute(query4);
-        //stmt.execute(query5);
+//        stmt.execute(query);
+//       stmt.execute(query2);
+//        stmt.execute(query3);
+//        stmt.execute(query4);
+//        stmt.execute(query5);
         
         System.out.println("Table created");
     }

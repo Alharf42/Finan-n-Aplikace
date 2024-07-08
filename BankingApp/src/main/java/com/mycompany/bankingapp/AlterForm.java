@@ -31,6 +31,7 @@ public class AlterForm extends JPanel{
         public AddTransakce(JTable table){
             //list of bank accounts
             //přidá do JComboBoxu na výběr ze všech účtu přítomných v databázi
+        
             ResultSet bankAccounts = ListOfBankAccounts();
             JComboBox ba = new JComboBox();
             try{
@@ -72,6 +73,7 @@ public class AlterForm extends JPanel{
             catch(SQLException e ){
                 e.getMessage();
             }
+            
             //amount
             JTextField am = new JTextField();
            //date            
@@ -120,11 +122,15 @@ public class AlterForm extends JPanel{
             catch(java.lang.IllegalArgumentException dateE){
                  JOptionPane.showMessageDialog(mainFrame, "Datum není ve správném formátu", "Chyba", JOptionPane.WARNING_MESSAGE);
             }
+            catch(java.lang.NullPointerException eNull){
+                JOptionPane.showMessageDialog(mainFrame, "Nebyl přidán účet, či výdaj, či příjem"
+                  , "Cyba", JOptionPane.ERROR_MESSAGE);
+            }
             });
             
             //add to AddFrom
             Box box = createVerticalBox();
-            box.add(new JLabel("Číslo úštu"));
+            box.add(new JLabel("Číslo účtu"));
             box.add(ba);
             box.add(new JLabel("Transakce"));
             box.add(tran);
@@ -141,7 +147,7 @@ public class AlterForm extends JPanel{
             box.add(ok);
             
             add(box);
-           
+        
             
         }
         

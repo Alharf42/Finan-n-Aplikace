@@ -57,7 +57,7 @@ public class GUI {
         
         mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         mainFrame.setLayout(new BorderLayout());
-        mainFrame.setSize(1400,900);
+        mainFrame.setSize(1000,600);
         mainFrame.setLocationRelativeTo(null);
         
      //funkce pro vytvoření horní navigace mezi stránkami
@@ -78,12 +78,6 @@ public class GUI {
         //add listeners
         JMenuBar nav = new JMenuBar();
         nav.setBackground(lightBlue);
-        
-        
-//        JMenuItem mainPage = new JMenu("mainPage");
-//        JMenuItem page2 = new JMenu("page2");
-//        JMenuItem page3 = new JMenu("page3");
-//        JMenuItem page4 = new JMenu("page4");
 
 //tlačítka do hlavní navigace pro přepínání stránek
           CustomButton mainPage = new CustomButton("");
@@ -377,7 +371,7 @@ public class GUI {
             JTable transakceTable = new JTable(createTableModel(ListOfAllTransactions()));
             String header[] = {"Číslo účtu", "Transakce", "Typ Výdaje", "Typ Výnosu","Částka","Datum","Poznámka" };
             setTableHeader(header,transakceTable);
-            
+            transakceTable.getColumnModel().getColumn(5).setPreferredWidth(80);
             //JPanel formulář pro přidání řádku do tabulky
             var transakceAdd = new AddTransakce(transakceTable);
             TablePanel transakce = new TablePanel(transakceAdd,transakceTable, "Transactions");
@@ -426,7 +420,8 @@ public class GUI {
              String header[] = {"Číslo účtu", "Transakce", "Typ Výdaje", "Typ Výnosu","Částka","Datum","Poznámka" };
             setTableHeader(header,tableTransactions);
             
-            
+            tableTransactions.getColumnModel().getColumn(5).setPreferredWidth(80);
+           
             //tabulka zbytnych (nutných) nákladů
     
             List<Map<String,Double>> unnecMap = monthlyZbytne();//funkce implementována
@@ -481,6 +476,7 @@ public class GUI {
             DataPanel sum = new DataPanel();
             sum.add(new JLabel("Finanční bilance: "));
             sum.setPreferredSize(new Dimension(110,20));
+            
             
             DataPanel sum2 = new DataPanel();
             String sumBalance = String.valueOf(sumBalance());
