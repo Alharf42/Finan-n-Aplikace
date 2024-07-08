@@ -12,12 +12,14 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.Toolkit;
 
 import java.text.SimpleDateFormat;
 
 import java.util.List;
 import java.util.Map;
 import java.util.Vector;
+import static javax.swing.BorderFactory.createEmptyBorder;
 
 import javax.swing.Box;
 import static javax.swing.Box.createHorizontalBox;
@@ -57,15 +59,18 @@ public class GUI {
         
         mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         mainFrame.setLayout(new BorderLayout());
-        mainFrame.setSize(1000,600);
+        //velikost obrazovky
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        mainFrame.setSize((int)(screenSize.getWidth()-50),(int)(screenSize.getHeight()-50));
         mainFrame.setLocationRelativeTo(null);
         
      //funkce pro vytvoření horní navigace mezi stránkami
         TopNavigation();
         
-        //funkce pro přepínaní stránek v navigace jejíž výchozí stránka je MainPage
+        //funkce pro přepínaní stránek v navigaci
+        //jejíž výchozí stránka je MainPage po předání parametru new MainPagePanel()
        switchPage(new MainPagePanel());
-     
+       
        mainFrame.setVisible(true);
        
     }
@@ -233,7 +238,10 @@ public class GUI {
             setLayout(new BorderLayout());
             add(menu, BorderLayout.NORTH);
             //nastaví preferovanou velikost panelu
-            setPreferredSize(new Dimension(500,300));
+            //aby se měnil dle velikosti mainFrame
+            Dimension tableD = new Dimension(mainFrame.getWidth()/2,mainFrame.getHeight()/2);
+            setPreferredSize(tableD);
+          
             setBorder(new LineBorder(Color.BLUE));
             
         }
@@ -473,15 +481,19 @@ public class GUI {
             //balanc
             //celkove prijmy
             //celkove naklady
+            
+            Dimension text = new Dimension(mainFrame.getWidth()/7,mainFrame.getHeight()/56);
+            Dimension value = new Dimension(mainFrame.getWidth()/8,mainFrame.getHeight()/56);
+            
             DataPanel sum = new DataPanel();
             sum.add(new JLabel("Finanční bilance: "));
-            sum.setPreferredSize(new Dimension(110,20));
+            sum.setPreferredSize(text);
             
             
             DataPanel sum2 = new DataPanel();
             String sumBalance = String.valueOf(sumBalance());
             sum2.add(new JLabel(sumBalance));
-            sum2.setPreferredSize(new Dimension(100,20));
+            sum2.setPreferredSize(value);
             
             Box balance = createHorizontalBox();
             balance.add(sum);
@@ -490,12 +502,12 @@ public class GUI {
             DataPanel income = new DataPanel();
             JLabel prijmy = new JLabel("Celkové příjmy: ");
             income.add(prijmy);
-            income.setPreferredSize(new Dimension(110,20));
+            income.setPreferredSize(text);
             
             DataPanel income2 = new DataPanel();
             String rev = String.valueOf(sumAllRevenues());
             income2.add(new JLabel(rev));
-            income2.setPreferredSize(new Dimension(100,20));
+            income2.setPreferredSize(value);
             
             Box allRev = createHorizontalBox();
             allRev.add(income);
@@ -504,12 +516,12 @@ public class GUI {
             DataPanel expenses = new DataPanel();
             JLabel naklady = new JLabel("Celkové náklady: ");
             expenses.add(naklady);
-            expenses.setPreferredSize(new Dimension(110,20));
+            expenses.setPreferredSize(text);
             
             DataPanel expenses2 = new DataPanel();
             String ex = String.valueOf(sumAllExpenses());
             expenses2.add(new JLabel(ex));
-            expenses2.setPreferredSize(new Dimension(100,20));
+            expenses2.setPreferredSize(value);
             
             Box allEx = createHorizontalBox();
             allEx.add(expenses);
@@ -517,11 +529,11 @@ public class GUI {
             //celkove zbytne
              DataPanel zbytne = new DataPanel();
             zbytne.add(new JLabel("Zbytné Náklady: "));
-            zbytne.setPreferredSize(new Dimension(110,20));
+            zbytne.setPreferredSize(text);
             
             DataPanel zbytne2 = new DataPanel();
             zbytne2.add(new JLabel(String.valueOf(sumZbytne())));
-            zbytne2.setPreferredSize(new Dimension(100,20));
+            zbytne2.setPreferredSize(value);
             
             Box unnecessary = createHorizontalBox();
             unnecessary.add(zbytne);
@@ -529,11 +541,11 @@ public class GUI {
             //celkove nezbytne
             DataPanel nezbytne = new DataPanel();
             nezbytne.add(new JLabel("Nezbytné Náklady: "));
-            nezbytne.setPreferredSize(new Dimension(110,20));
+            nezbytne.setPreferredSize(text);
             
             DataPanel nezbytne2 = new DataPanel();
             nezbytne2.add(new JLabel(String.valueOf(sumNezbytne())));
-            nezbytne2.setPreferredSize(new Dimension(100,20));
+            nezbytne2.setPreferredSize(value);
             
             Box necessary = createHorizontalBox();
             necessary.add(nezbytne);
@@ -584,7 +596,9 @@ public class GUI {
             JScrollPane paneTransactions = new JScrollPane(tableTransactions);
             //aby byly všechny tabulky stejně velké stačí nastavit
             //velikost JScrollPane pouze u jedné, Box přízbpůsobý velikost u ostatních
-            paneTransactions.setPreferredSize(new Dimension(500,300));
+            Dimension tableD = new Dimension(mainFrame.getWidth()/2,mainFrame.getHeight()/2);
+            //500 300
+            paneTransactions.setPreferredSize(tableD);
             tables.add(paneTransactions);
             tables.add(new JLabel("Typy příjmů za dané období"));
             tables.add(new JScrollPane(revenues));
@@ -641,7 +655,9 @@ public class GUI {
             prijmy.add(new JScrollPane(prijmyTable));
             
             box.add(prijmy);
-            add(box);
+            
+            box.setBorder(createEmptyBorder(10,mainFrame.getWidth()/4,mainFrame.getHeight()/3,mainFrame.getWidth()/4));
+            add(box,BorderLayout.CENTER);
             setBackground(background);
         }
         
@@ -665,8 +681,9 @@ public class GUI {
             
             all.add(new JLabel("Všechny výdaje"));
             all.add(allExp);
-            
-            add(all);
+            all.setBorder(createEmptyBorder(10,mainFrame.getWidth()/4,
+                    mainFrame.getHeight()/3,mainFrame.getWidth()/4));
+            add(all,BorderLayout.CENTER);
             setBackground(background);
         }
         
@@ -696,10 +713,13 @@ public class GUI {
                 RevenuesVSExpenses.updateDay((int)day.getSelectedItem());
                 
                     });
-            setDate.add(new JLabel("Zadejte počet sledovaných dní: "));
+            
+            Box label = createVerticalBox();
+            label.add(new JLabel("Zadejte počet sledovaných dní: "));
             setDate.add(day);
             setDate.add(monthlyDate);
             
+            add(label);
             add(setDate);
             setBackground(background);
         }
@@ -721,9 +741,13 @@ public class GUI {
            
             baPanel.add(new JScrollPane(baTable));
             
-            box.add(new JLabel("Účty"));
+            box.add(new JLabel("Platební Účty"));
             box.add(baPanel);
-            add(box);
+            setLayout(new BorderLayout());
+            box.setBorder(createEmptyBorder(10,mainFrame.getWidth()/4,mainFrame.getHeight()/3,mainFrame.getWidth()/4));
+            add(box,BorderLayout.CENTER);
+            
+            
             setBackground(background);
         }
         
