@@ -123,8 +123,8 @@ public class AlterForm extends JPanel{
                  JOptionPane.showMessageDialog(mainFrame, "Datum není ve správném formátu", "Chyba", JOptionPane.WARNING_MESSAGE);
             }
             catch(java.lang.NullPointerException eNull){
-                JOptionPane.showMessageDialog(mainFrame, "Nebyl přidán účet, či výdaj, či příjem"
-                  , "Cyba", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(mainFrame, "Nebyl přidán účet, výdaj, či příjem"
+                  , "Chyba", JOptionPane.ERROR_MESSAGE);
             }
             });
             
